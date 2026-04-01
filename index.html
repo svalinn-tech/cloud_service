@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVALINN | Приватная облачная инфраструктура</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0D0F12;
+            --color-surface: #15181D;
+            --color-surface-2: #1C2026;
+            --color-primary: #3A5F7A;
+            --color-primary-hover: #4B7695;
+            --color-text: #E8E4DC;
+            --color-text-muted: #A1A5AB;
+
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 1rem; }
+        a { color: inherit; text-decoration: none; transition: 0.2s ease; }
+
+        h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.2; }
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
+        h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+        .label {
+            font-family: var(--font-mono); font-size: 0.875rem; text-transform: uppercase;
+            letter-spacing: 0.05em; color: var(--color-primary); margin-bottom: 1rem; display: block;
+        }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 0.875rem 1.5rem; border-radius: var(--radius-full);
+            font-weight: 500; font-size: 1rem; cursor: pointer; border: 1px solid transparent;
+            transition: all 0.2s; background: transparent; color: inherit; font-family: inherit;
+        }
+        .btn-primary { background: var(--color-primary); color: #fff; }
+        .btn-primary:hover { background: var(--color-primary-hover); }
+        .btn-outline { border-color: rgba(232, 228, 220, 0.2); color: var(--color-text); }
+        .btn-outline:hover { border-color: var(--color-text); }
+        .btn-full { width: 100%; margin-top: 1.5rem; }
+
+        header { padding: 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 1.5rem; }
+        .nav-links a:hover { color: var(--color-primary); }
+        @media (max-width: 768px) { .nav-links { display: none; } }
+
+        section { padding: 6rem 0; }
+        .hero { text-align: center; padding: 8rem 0; }
+        .hero p { font-size: 1.125rem; color: var(--color-text-muted); max-width: 600px; margin: 0 auto 2rem; }
+        .hero-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+
+        .card { background: var(--color-surface); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.03); }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+        .stat-val { font-family: var(--font-mono); font-size: 2.5rem; color: var(--color-primary); margin-bottom: 0.5rem; line-height: 1; }
+        .stat-label { font-size: 0.875rem; color: var(--color-text-muted); }
+
+        ul.feature-list { list-style: none; }
+        ul.feature-list li { position: relative; padding-left: 1.5rem; margin-bottom: 1rem; color: var(--color-text-muted); }
+        ul.feature-list li::before { content: '✦'; position: absolute; left: 0; color: var(--color-primary); }
+        ul.feature-list strong { color: var(--color-text); font-weight: 500; }
+
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+        @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+        .price-card { background: var(--color-surface); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; }
+        .price-card.popular { border-color: var(--color-primary); background: var(--color-surface-2); }
+        .price { font-size: 2.5rem; font-family: var(--font-display); margin: 1rem 0 0.5rem; color: var(--color-text); }
+        .price span { font-size: 1rem; font-family: var(--font-body); color: var(--color-text-muted); }
+
+        .faq-item { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1rem 0; text-align: left; }
+        .faq-q { font-weight: 500; font-size: 1.125rem; margin-bottom: 0.5rem; color: var(--color-text); }
+        .faq-a { color: var(--color-text-muted); }
+
+        footer { padding: 3rem 0; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: var(--color-text-muted); font-size: 0.875rem; }
+        footer a { color: var(--color-text); margin: 0 0.5rem; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.2); }
+        .legal-info { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); font-family: var(--font-mono); font-size: 0.75rem; opacity: 0.6; }
+
+        /* Всплывающее окно (Модалка оформления заказа) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 15, 18, 0.9); backdrop-filter: blur(5px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000; opacity: 0; pointer-events: none; transition: 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal {
+            background: var(--color-surface-2); padding: 2.5rem; border-radius: var(--radius-lg);
+            width: 100%; max-width: 400px; border: 1px solid rgba(255,255,255,0.1);
+            transform: translateY(20px); transition: 0.3s ease; position: relative;
+        }
+        .modal-overlay.active .modal { transform: translateY(0); }
+        .modal-close {
+            position: absolute; top: 1rem; right: 1rem; background: none; border: none;
+            color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer;
+        }
+        .modal-close:hover { color: var(--color-text); }
+        .form-group { margin-bottom: 1.5rem; text-align: left; }
+        .form-group label { display: block; font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 0.5rem; }
+        .form-control {
+            width: 100%; padding: 0.875rem 1rem; border-radius: 8px;
+            background: var(--color-bg); border: 1px solid rgba(255,255,255,0.1);
+            color: var(--color-text); font-family: var(--font-body);
+        }
+        .form-control:focus { outline: none; border-color: var(--color-primary); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <div class="logo">SVALINN</div>
+            <nav class="nav-links">
+                <a href="#about">О сервисе</a>
+                <a href="#benefits">Инфраструктура</a>
+                <a href="#pricing">Тарифы</a>
+            </nav>
+            <button onclick="openCheckout('Консультация')" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Связаться с нами</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <span class="label">Аренда вычислительных ресурсов · SLA 99.9%</span>
+            <h1>Персональная облачная инфраструктура</h1>
+            <p>Svalinn — провайдер выделенных серверных кластеров для тех, кому важна стабильность, высокая пропускная способность и изолированная среда без соседей.</p>
+            <div class="hero-btns">
+                <button onclick="openCheckout('Тариф Optima')" class="btn btn-primary">Оформить доступ</button>
+                <a href="#pricing" class="btn btn-outline">Посмотреть тарифы</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="container grid-2">
+        <div>
+            <span class="label">ГЛАВА 01 — ИНФРАСТРУКТУРА</span>
+            <h2>Как работает Svalinn</h2>
+            <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">Мы предоставляем доступ к выделенным серверам, настроенным вручную. Наша маршрутизация гарантирует отсутствие агрессивных всплесков трафика и влияния других клиентов на вашу скорость.</p>
+            <ul class="feature-list">
+                <li><strong>До 20 клиентов на узел</strong> — строгое ограничение нагрузки</li>
+                <li><strong>Каналы до 1 Гбит/с</strong> — высокая пропускная способность</li>
+                <li><strong>Чистые IP-адреса</strong> — выделенные пулы под клиента</li>
+                <li><strong>99.9% доступность</strong> — круглосуточный мониторинг</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Отказоустойчивость</h3>
+            <p style="color: var(--color-text-muted);">В отличие от массовых хостингов, где тысячи сайтов делят один канал, Svalinn организует изолированные кластеры с ограниченным числом арендаторов ресурсов.</p>
+            <div class="stats-grid">
+                <div><div class="stat-val">20</div><div class="stat-label">макс. на узел</div></div>
+                <div><div class="stat-val">1</div><div class="stat-label">Гбит/с канал</div></div>
+                <div><div class="stat-val">24/7</div><div class="stat-label">поддержка</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="container">
+        <div style="text-align: center;">
+            <span class="label">ГЛАВА 02 — ТАРИФЫ</span>
+            <h2>Аренда кластера</h2>
+            <p style="color: var(--color-text-muted);">Прозрачное ценообразование на выделенные ресурсы. Первые 3 дня — тестовый период.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h3>Старт</h3>
+                <div class="price">490 ₽ <span>/ 1 мес</span></div>
+                <p style="color: var(--color-text-muted); margin-bottom: 1.5rem; font-size: 0.875rem;">Базовый доступ к инфраструктуре для оценки качества.</p>
+                <ul class="feature-list" style="font-size: 0.875rem; margin-bottom: 1.5rem;">
+                    <li>Локации: DE / FIN / SWISS</li>
+                    <li>Скорость до 1 Гбит/с</li>
+                    <li>Техническая поддержка (email)</li>
+                </ul>
+                <button onclick="openCheckout('Тариф Старт (1 мес) - 490 руб')" class="btn btn-outline btn-full">Оформить заказ</button>
+            </div>
+
+            <div class="price-card popular">
+                <span class="label" style="font-size: 0.75rem; margin-bottom: 0.5rem;">Популярный</span>
+                <h3>Optima</h3>
+                <div class="price">1 170 ₽ <span>/ 3 мес</span></div>
+                <p style="color: var(--color-text-muted); margin-bottom: 1.5rem; font-size: 0.875rem;">(390 ₽ / месяц — выгода 100 ₽/мес)</p>
+                <ul class="feature-list" style="font-size: 0.875rem; margin-bottom: 1.5rem;">
+                    <li><strong>Приоритетная поддержка (Telegram)</strong></li>
+                    <li><strong>Гибкая маршрутизация</strong></li>
+                    <li>Локации: DE / FIN / SWISS</li>
+                    <li>Скорость до 1 Гбит/с</li>
+                </ul>
+                <button onclick="openCheckout('Тариф Optima (3 мес) - 1170 руб')" class="btn btn-primary btn-full">Оформить заказ</button>
+            </div>
+
+            <div class="price-card">
+                <h3>Пробный</h3>
+                <div class="price">0 ₽ <span>/ 3 дня</span></div>
+                <p style="color: var(--color-text-muted); margin-bottom: 1.5rem; font-size: 0.875rem;">Попробуйте без риска и привязки карты.</p>
+                <ul class="feature-list" style="font-size: 0.875rem; margin-bottom: 1.5rem;">
+                    <li>Полный доступ к серверам</li>
+                    <li>Отсутствие лимитов</li>
+                    <li>Никаких обязательств</li>
+                </ul>
+                <button onclick="openCheckout('Пробный период (3 дня)')" class="btn btn-outline btn-full">Получить доступ</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p style="margin-bottom: 1rem;">Svalinn — инфраструктурный сервис предоставления выделенных вычислительных мощностей.</p>
+            <p>
+                <!-- Ссылки на документы обязательны для модерации -->
+                <a href="offer.html" target="_blank">Договор оферты</a> | 
+                <a href="privacy.html" target="_blank">Политика конфиденциальности</a> | 
+                <a href="mailto:svalinn.support@gmail.com">svalinn.support@gmail.com</a>
+            </p>
+
+            <!-- ЮРИДИЧЕСКИЙ БЛОК ДЛЯ ЮKASSA (ОБЯЗАТЕЛЬНО ИЗМЕНИ ДАННЫЕ) -->
+            <div class="legal-info">
+                Плательщик НПД (Самозанятый) Иванов Иван Иванович<br>
+                ИНН: 123456789012<br>
+                г. Москва, ул. Примерная, д. 1<br>
+                © 2026 Svalinn Cloud Infrastructure.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно оформления заказа (имитация для модераторов) -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeCheckout()">×</button>
+            <h3 style="margin-bottom: 0.5rem;">Оформление заказа</h3>
+            <p style="color: var(--color-text-muted); font-size: 0.875rem; margin-bottom: 1.5rem;" id="modalProduct">Тариф</p>
+
+            <form onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label>Ваш Email для отправки доступов</label>
+                    <input type="email" class="form-control" placeholder="hello@example.com" required>
+                </div>
+                <div class="form-group" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary btn-full">Перейти к оплате</button>
+                </div>
+                <p style="font-size: 0.75rem; color: var(--color-text-muted); text-align: center; margin-top: 1rem;">
+                    Нажимая кнопку, вы соглашаетесь с <a href="offer.html" style="text-decoration: underline;">Офертой</a>.
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openCheckout(productName) {
+            document.getElementById('modalProduct').innerText = 'Выбранный продукт: ' + productName;
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.remove('active');
+        }
+
+        function submitForm(e) {
+            e.preventDefault();
+            // Имитация перехода на платежный шлюз для модераторов ЮKassa
+            alert('Сайт находится в режиме настройки платежного шлюза ЮKassa/Helket. Оплата временно недоступна.');
+            closeCheckout();
+        }
+    </script>
+</body>
+</html>
